@@ -69,7 +69,7 @@ for config in "$ROOT/configs/grub/grub.cfg" "$ROOT/configs/grub/loopback.cfg"; d
     fail "$(basename "$config") gives safe graphics a hotkey"
   [[ $(wc -l <<<"$ids") == $(sort -u <<<"$ids" | wc -l) ]] ||
     fail "$(basename "$config") gives every menu entry a unique ID"
-  [[ $(grep -ow 'nomodeset' "$config" | wc -l) == 1 ]] ||
+  (( $(grep -ow 'nomodeset' "$config" | wc -l) == 1 )) ||
     fail "$(basename "$config") limits nomodeset to safe graphics"
   [[ $(grub_setting "$config" default) == "archlinux" ]] || fail "$(basename "$config") keeps normal boot as the default"
   timeout=$(grub_setting "$config" timeout)
